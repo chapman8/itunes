@@ -10,10 +10,12 @@ app.controller('mainCtrl', function($scope, itunesService){
       sortInfo: {fields: ['Song', 'Artist', 'Collection', 'Type'], directions: ['asc']},
       columnDefs: [
         {field: 'Play', displayName: 'Play', width: '40px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}"><img src="http://www.icty.org/x/image/Miscellaneous/play_icon30x30.png"></a></div>'},
+        {field: 'Song', displayName: 'Song'},
         {field: 'Artist', displayName: 'Artist'},
         {field: 'Collection', displayName: 'Collection'},
         {field: 'AlbumArt', displayName: 'Album Art', width: '110px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><img src="{{row.getProperty(col.field)}}"></div>'},
         {field: 'Type', displayName: 'Type'},
+        {field: 'SinglePrice', displayName: 'SinglePrice'},
         {field: 'CollectionPrice', displayName: 'Collection Price'},
       ]
   };
@@ -30,6 +32,16 @@ app.controller('mainCtrl', function($scope, itunesService){
   //Also note that that method should be retuning a promise, so you could use .then in this function.
     
     //Code here
+    $scope.getTheArtist = function () {
+      var artistInput = $scope.artist;
+      itunesService.getArtist(artistInput).then(function(res) {
+        $scope.songData = res;
+      })
+    }
+
+    $scope.getSongData = function () {
+      $scope.getTheArtist();
+    };
 
 
   //Check that the above method is working by entering a name into the input field on your web app, and then console.log the result
